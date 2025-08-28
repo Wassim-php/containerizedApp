@@ -1,0 +1,49 @@
+<div class="ticket-container">
+  <div *ngIf="loading" class="loading-state">
+    <p>Loading details...</p>
+  </div>
+
+  <div *ngIf="!loading && ticket" class="ticket-card">
+    <h2>Ticket #{{ ticket.id }}</h2>
+    
+    <div class="ticket-info">
+      <div class="info-row">
+        <span class="info-label">Reservation ID:</span>
+        <span class="info-value">{{ ticket.reservationId }}</span>
+      </div>
+      
+      <div class="info-row">
+        <span class="info-label">Ticket Status:</span>
+        <span class="status-badge" [class.reserved]="ticket.reserved">
+          {{ ticket.reserved ? 'Reserved' : 'Available' }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Reservation Details Section -->
+    <div *ngIf="reservation" class="reservation-section">
+      <h3>Reservation Details</h3>
+      
+      <div class="info-row">
+        <span class="info-label">Guest Name:</span>
+        <span class="info-value">{{ reservation.name }}</span>
+      </div>
+      
+      <div class="info-row">
+        <span class="info-label">Reservation Date:</span>
+        <span class="info-value">{{ reservation.reservedDate| date:'mediumDate' }}</span>
+      </div>
+      
+      
+    </div>
+
+    <div class="actions">
+      <button class="back-button" routerLink="/tickets">Back to List</button>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !ticket" class="empty-state">
+    <p>No ticket found.</p>
+    <button class="back-button" routerLink="/tickets">Back to List</button>
+  </div>
+</div>

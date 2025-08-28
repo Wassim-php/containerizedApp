@@ -1,0 +1,6 @@
+CREATE DATABASE IF NOT EXISTS reservation_db;
+CREATE DATABASE IF NOT EXISTS ticket_db;
+GRANT ALL PRIVILEGES ON reservation_db.* TO 'user'@'%';
+GRANT ALL PRIVILEGES ON ticket_db.* TO 'user'@'%';
+
+FLUSH PRIVILEGES;

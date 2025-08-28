@@ -1,0 +1,28 @@
+
+<button routerLink="/" class="back-link"> ← Back</button>
+<div class="ticket-container">
+  <h2>Ticket List</h2>
+  
+  <div *ngIf="tickets.length === 0" class="empty-state">
+    <p>No tickets found.</p>
+  </div>
+
+  <ul class="ticket-list">
+    <li *ngFor="let ticket of tickets" 
+        class="ticket-item"
+        [routerLink]="['/tickets', ticket.id]">
+        
+      <div class="ticket-header">
+        <span class="ticket-id">#{{ ticket.id }}</span>
+        <span class="reservation-status" [class.true]="ticket.reserved" [class.false]="!ticket.reserved">
+          {{ ticket.reserved ? 'Reserved' : 'Available' }}
+        </span>
+      </div>
+      
+      <div class="ticket-details">
+        <p><strong>Reservation ID:</strong> {{ ticket.reservationId }}</p>
+        <p><strong>Status:</strong> {{ ticket.reserved ? 'Confirmed' : 'Pending' }}</p>
+      </div>
+    </li>
+  </ul>
+</div>

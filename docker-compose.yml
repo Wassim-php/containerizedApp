@@ -1,0 +1,105 @@
+version: "3.9"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: microticket-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d 
+    networks:
+      - microticket-network
+
+  eureka-server:
+    build:
+      context: backend/microticket/eureka-server
+      dockerfile: Dockerfile
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    depends_on:
+      - mysql
+    networks:
+      - microticket-network
+
+  reservation-service:
+    build:
+      context: backend/microticket/reservation
+      dockerfile: Dockerfile
+    container_name: reservation-service
+    ports:
+      - "9090:9090"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/reservation_db
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: rootpassword
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+    depends_on:
+      - eureka-server
+      - mysql
+      - ticket-service
+    networks:
+      - microticket-network
+
+  ticket-service:
+    build:
+      context: backend/microticket/ticket
+      dockerfile: Dockerfile
+    container_name: ticket-service
+    ports:
+      - "9091:9091"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/ticket_db
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: rootpassword
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+    depends_on:
+      - eureka-server
+      - mysql
+    networks:
+      - microticket-network
+
+  gateway:
+    build:
+      context: backend/microticket/gateway
+      dockerfile: Dockerfile
+    container_name: api-gateway
+    ports:
+      - "8079:8079"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+    depends_on:
+      - eureka-server
+      - reservation-service
+      - ticket-service
+    networks:
+      - microticket-network
+
+
+  frontend:
+    build: 
+      context: frontend
+      dockerfile: Dockerfile
+    container_name: microticket-frontend
+    ports:
+      - "4200:80"
+    networks:
+      - microticket-network
+    depends_on:
+      - reservation-service    
+      - ticket-service
+      - gateway
+      - eureka-server
+
+volumes:
+  mysql-data:
+
+networks:
+  microticket-network:
+    driver: bridge

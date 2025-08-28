@@ -1,0 +1,114 @@
+/* Main container styling */
+.ticket-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.ticket-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+}
+
+.ticket-item {
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+}
+
+.ticket-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border-color: #c3cfe2;
+}
+
+.ticket-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.ticket-id {
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 1.1rem;
+}
+
+.ticket-details p {
+  margin: 0.75rem 0;
+  line-height: 1.6;
+  color: #34495e;
+}
+
+.ticket-details strong {
+  color: #2c3e50;
+  min-width: 180px;
+  display: inline-block;
+}
+
+/* Status indicator */
+.reservation-status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.reservation-status.true {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.reservation-status.false {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 2rem;
+  color: #7f8c8d;
+  font-size: 1.1rem;
+  grid-column: 1 / -1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .ticket-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .ticket-item {
+    padding: 1.25rem;
+  }
+  
+  .ticket-details strong {
+    min-width: 140px;
+    display: inline-block;
+  }
+}
+.back-link {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.5rem 1rem;
+  background: #3498db;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.back-link:hover {
+  background: #2980b9;
+  transform: translateY(-2px);
+}

@@ -1,0 +1,30 @@
+<div class="form-container">
+  <h1>Create New Reservation</h1>
+  
+  <form (ngSubmit)="onSubmit()" #reservationForm="ngForm">
+    <div class="form-group">
+      <label for="guestName">Guest Name *</label>
+      <input type="text" id="guestName" name="name" 
+             [(ngModel)]="newReservation.name" 
+             required
+             placeholder="John Doe">
+    </div>
+
+    <div class="form-group">
+      <label for="reservationDate">Reservation Date *</label>
+      <input type="date" id="reservationDate" name="reservedDate"
+             [(ngModel)]="newReservation.reservedDate"
+             required>
+      <div class="date-hint">Click the calendar icon to pick a date</div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="submit-btn" [disabled]="!reservationForm.form.valid">
+        Create Reservation
+      </button>
+      <button type="button" class="cancel-btn" routerLink="/reservations">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

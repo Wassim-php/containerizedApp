@@ -1,0 +1,29 @@
+<!-- reservation-list.component.html -->
+ <button routerLink="/" class="back-link"> ← Back</button>
+<div class="reservation-container">
+  <h2>Reservation List</h2>
+  
+  <div *ngIf="reservations.length === 0" class="empty-state">
+    <p>No reservations found.</p>
+  </div>
+
+  <ul class="reservation-list">
+    <li *ngFor="let reservation of reservations" 
+        class="reservation-item"
+        [routerLink]="['/reservations', reservation.id]">
+        
+      <div class="reservation-header">
+        <span class="reservation-id">#{{ reservation.id }}</span>
+      </div>
+      
+      <div class="reservation-details">
+        <p><strong>Date:</strong> {{ reservation.reservedDate| date:'mediumDate' }}</p>
+        <p><strong>Guest:</strong> {{ reservation.name }}</p>
+      </div>
+      
+     
+    </li>
+  </ul>
+  <button class="back-link" routerLink="/reservations/create"> Create a Reservation</button>
+  
+</div>

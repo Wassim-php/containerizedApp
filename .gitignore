@@ -1,0 +1,34 @@
+# === MAVEN / SPRING BOOT ===
+target/
+*.jar
+*.war
+*.log
+
+# === ANGULAR ===
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/.angular/cache
+
+# === ENV FILES ===
+.env
+*.pid
+
+# === IDE / EDITORS ===
+.idea/
+.vscode/
+*.iml
+*.classpath
+*.project
+*.settings/
+*.sublime-workspace
+
+# === SYSTEM FILES ===
+.DS_Store
+Thumbs.db
+
+# === Miscellaneous ===
+/coverage
+/libpeerconnection.log
+testem.log
+/typings

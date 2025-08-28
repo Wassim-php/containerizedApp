@@ -1,0 +1,91 @@
+/* Main container styling */
+.reservation-details {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Header styling */
+.reservation-details h2 {
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #f1f1f1;
+}
+
+/* Detail items styling */
+.details p {
+  margin: 1rem 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.details strong {
+  color: #34495e;
+  display: inline-block;
+  min-width: 100px;
+}
+
+/* Status indicators */
+.confirmed {
+  color: #27ae60;
+  font-weight: bold;
+}
+
+.pending {
+  color: #e67e22;
+  font-weight: bold;
+}
+
+/* Back link styling */
+.back-link {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.5rem 1rem;
+  background: #3498db;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.back-link:hover {
+  background: #2980b9;
+  transform: translateY(-2px);
+}
+
+/* Loading state */
+.loading-message {
+  text-align: center;
+  color: #7f8c8d;
+  font-style: italic;
+}
+
+/* Error state */
+.error-message {
+  color: #e74c3c;
+  padding: 1rem;
+  background: #fdecea;
+  border-radius: 4px;
+  margin-top: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .reservation-details {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+  
+  .details p {
+    font-size: 1rem;
+  }
+  
+  .details strong {
+    min-width: 80px;
+  }
+}

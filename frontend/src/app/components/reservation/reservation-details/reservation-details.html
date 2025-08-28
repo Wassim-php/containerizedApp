@@ -1,0 +1,14 @@
+<div *ngIf="reservation" class="reservation-details">
+  <h2>Reservation #{{ reservation.id }}</h2>
+  
+  <div class="details">
+    <p><strong>Guest:</strong> {{ reservation.name }}</p>
+    <p><strong>Date:</strong> {{ reservation.reservedDate| date }}</p>
+  </div>
+
+  <button routerLink="/reservations" class="back-link">← Back to List</button>
+</div>
+
+<div *ngIf="!reservation">
+  <p>Loading reservation details...</p>
+</div>
