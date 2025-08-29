@@ -13,7 +13,7 @@ jobs:
     env:
       DOCKER_REGISTRY: docker.io
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      DOCKER_PASSWORD:   secrets.DOCKER_PASSWORD }}
       FRONTEND_IMAGE: microticket-frontend:latest
       EUREKA_IMAGE: eureka-server:latest
       RESERVATION_IMAGE: reservation-service:latest
@@ -44,7 +44,7 @@ jobs:
         java-version: '17'
 
     - name: Build backend microservices
-      working-directory: ./backend
+      working-directory: ./backend/microticket
       run: mvn clean package -DskipTests
 
     # --- Docker login ---
