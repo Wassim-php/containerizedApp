@@ -45,7 +45,7 @@ jobs:
 
     - name: Build backend microservices
       working-directory: ./backend
-      run: ./mvnw clean package -DskipTests
+      run: mvn clean package -DskipTests
 
     # --- Docker login ---
     - name: Login to Docker Hub
