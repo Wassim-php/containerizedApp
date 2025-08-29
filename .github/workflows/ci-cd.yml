@@ -1,0 +1,73 @@
+name: CI/CD Microticket
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    env:
+      DOCKER_REGISTRY: docker.io
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      FRONTEND_IMAGE: microticket-frontend:latest
+      EUREKA_IMAGE: eureka-server:latest
+      RESERVATION_IMAGE: reservation-service:latest
+      TICKET_IMAGE: ticket-service:latest
+      GATEWAY_IMAGE: api-gateway:latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # --- Frontend ---
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
+
+    - name: Build frontend
+      working-directory: ./frontend
+      run: |
+        npm install
+        npm run build --prod
+
+    # --- Backend ---
+    - name: Setup Java
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Build backend microservices
+      working-directory: ./backend
+      run: ./mvnw clean package -DskipTests
+
+    # --- Docker login ---
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    # --- Build & Push Docker images ---
+    - name: Build and push Docker images
+      run: |
+        docker build -t $DOCKER_USERNAME/$FRONTEND_IMAGE ./frontend
+        docker push $DOCKER_USERNAME/$FRONTEND_IMAGE
+
+        docker build -t $DOCKER_USERNAME/$EUREKA_IMAGE ./backend/microticket/eureka-server
+        docker push $DOCKER_USERNAME/$EUREKA_IMAGE
+
+        docker build -t $DOCKER_USERNAME/$RESERVATION_IMAGE ./backend/microticket/reservation
+        docker push $DOCKER_USERNAME/$RESERVATION_IMAGE
+
+        docker build -t $DOCKER_USERNAME/$TICKET_IMAGE ./backend/microticket/ticket
+        docker push $DOCKER_USERNAME/$TICKET_IMAGE
+
+        docker build -t $DOCKER_USERNAME/$GATEWAY_IMAGE ./backend/microticket/gateway
+        docker push $DOCKER_USERNAME/$GATEWAY_IMAGE
